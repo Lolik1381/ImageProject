@@ -1,0 +1,19 @@
+ru/image/giga/mars/model/Dialog.java
+ ru.image.giga.mars.model.Dialog
+ ru.image.giga.mars.model.Dialog$DialogBuilder
+ru/image/giga/mars/model/DialogDictionary.java
+ ru.image.giga.mars.model.DialogDictionary
+ ru.image.giga.mars.model.DialogDictionary$DialogDictionaryBuilder
+ru/image/giga/mars/model/PathType.java
+ ru.image.giga.mars.model.PathType
+ru/image/giga/mars/model/Position.java
+ ru.image.giga.mars.model.Position
+ru/image/giga/mars/converter/ImageConverter.java
+ ru.image.giga.mars.converter.ImageConverter
+ru/image/giga/mars/model/DialogBody.java
+ ru.image.giga.mars.model.DialogBody
+ ru.image.giga.mars.model.DialogBody$DialogBodyBuilder
+ru/image/giga/mars/service/DialogService.java
+ ru.image.giga.mars.service.DialogService
+ru/image/giga/mars/Main.java
+ ru.image.giga.mars.Main
