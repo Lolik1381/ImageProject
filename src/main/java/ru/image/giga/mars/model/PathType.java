@@ -1,11 +1,15 @@
 package ru.image.giga.mars.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 @Getter
@@ -17,30 +21,30 @@ public enum PathType {
     BACK_BOARD("gigamars/resource/backBoard.png"),
     BACK_CARD("gigamars/resource/backCard.png");
 
-    private final String path;
+    private final String pathToFile;
 
-    public File getFile() throws IOException {
-        if (path == null) {
+    public File getFile() throws IOException, URISyntaxException {
+        if (pathToFile == null) {
             throw new IOException("File cannot be created! Required parameters are missing: path");
         }
 
-        return new File(getPathName());
+        return getPath().toFile();
     }
 
-    public URL getResource() {
-        URL resource = getClass().getClassLoader().getResource(this.getPath());
+    public Path getPath() throws URISyntaxException {
+        URL resource = getClass().getClassLoader().getResource(this.getPathToFile());
         if (Objects.isNull(resource)) {
-            throw new IllegalArgumentException(String.format("File %s not found!", this.getPath()));
+            throw new IllegalArgumentException(String.format("File %s not found!", this.getPathToFile()));
         }
 
-        return resource;
+        return Paths.get(resource.toURI());
     }
 
-    public String getPathName() {
-        return getResource().getPath();
-    }
+//    public String getPathName() {
+//        return getResource().getPath();
+//    }
 
     public boolean exist() {
-        return Objects.nonNull(getClass().getClassLoader().getResource(this.getPath()));
+        return Objects.nonNull(getClass().getClassLoader().getResource(this.getPathToFile()));
     }
 }
