@@ -39,7 +39,7 @@ public class ImageConverter {
     );
 
     public void createPdfBoards() throws IOException, DocumentException {
-        List<Path> pathsDirectory = Files.list(Paths.get(PathType.PHOTO.getPath())).collect(Collectors.toList());
+        List<Path> pathsDirectory = Files.list(Paths.get(PathType.PHOTO_ENDPOINT.getPathName())).collect(Collectors.toList());
         isDirectory(pathsDirectory);
 
         for (Path pathDirectory : pathsDirectory) {
@@ -51,11 +51,11 @@ public class ImageConverter {
 
     public void createPdfBoard(List<Path> paths, String pdfName) throws IOException, DocumentException {
         int numberPhotoOnBoard = 0;
-        BufferedImage board = ImageIO.read(PathType.BOARD.getFile());
+        BufferedImage board = ImageIO.read(PathType.BORDER_CARD.getFile());
 
         Document document = new Document(new Rectangle(2480, 3508));
 
-        PdfWriter.getInstance(document, new FileOutputStream(String.format("%s/%s.pdf", PathType.PDF.getPath(), pdfName)));
+        PdfWriter.getInstance(document, new FileOutputStream(String.format("%s/%s.pdf", PathType.PDF_ENDPOINT.getPathName(), pdfName)));
         document.open();
 
         for (Path path : paths) {
@@ -63,10 +63,12 @@ public class ImageConverter {
             image = Scalr.crop(image, 174, 203, 2178, 3105);
             image = Scalr.resize(image, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC,697, 982);
 
-            board.getGraphics().drawImage(image,
+            board.getGraphics().drawImage(
+                    image,
                     POSITION_CARDS.get(numberPhotoOnBoard).getX(),
                     POSITION_CARDS.get(numberPhotoOnBoard).getY(),
-                    null);
+                    null
+            );
 
             numberPhotoOnBoard++;
             if (numberPhotoOnBoard == 9) {
@@ -79,7 +81,7 @@ public class ImageConverter {
         if (numberPhotoOnBoard != 0) {
             addDocument(board, document);
         }
-        addDocument(ImageIO.read(PathType.BACK.getFile()), document);
+        //addDocument(ImageIO.read(PathType.BACK_BOARD.getFile()), document);
 
         document.close();
     }
@@ -94,7 +96,8 @@ public class ImageConverter {
             document.add(image);
             document.newPage();
         }
-        return ImageIO.read(PathType.BOARD.getFile());
+
+        return ImageIO.read(PathType.BORDER_CARD.getFile());
     }
 
     private void isDirectory(List<Path> paths) throws FileSystemException {
