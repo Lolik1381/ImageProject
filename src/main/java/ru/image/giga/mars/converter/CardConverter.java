@@ -23,7 +23,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ImageConverter {
+public class CardConverter {
 
     private static final List<Position> POSITION_CARDS = List.of(
             new Position(68, 91),
@@ -52,7 +52,7 @@ public class ImageConverter {
 
     public void createPdfBoard(List<Path> paths, String pdfName) throws IOException, DocumentException, URISyntaxException {
         int numberPhotoOnBoard = 0;
-        BufferedImage board = ImageIO.read(PathType.BORDER_CARD.getFile());
+        BufferedImage borderBoard = ImageIO.read(PathType.BORDER_CARD.getFile());
 
         Document document = new Document(new Rectangle(2480, 3508));
 
@@ -64,7 +64,7 @@ public class ImageConverter {
             image = Scalr.crop(image, 174, 203, 2178, 3105);
             image = Scalr.resize(image, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC,697, 982);
 
-            board.getGraphics().drawImage(
+            borderBoard.getGraphics().drawImage(
                     image,
                     POSITION_CARDS.get(numberPhotoOnBoard).getX(),
                     POSITION_CARDS.get(numberPhotoOnBoard).getY(),
@@ -73,14 +73,14 @@ public class ImageConverter {
 
             numberPhotoOnBoard++;
             if (numberPhotoOnBoard == 9) {
-                board = addDocument(board, document);
+                borderBoard = addDocument(borderBoard, document);
 
                 numberPhotoOnBoard = 0;
             }
         }
 
         if (numberPhotoOnBoard != 0) {
-            addDocument(board, document);
+            addDocument(borderBoard, document);
         }
         addDocument(ImageIO.read(PathType.BACK_BOARD.getFile()), document);
 

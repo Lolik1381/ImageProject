@@ -1,6 +1,5 @@
 package ru.image.giga.mars.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -38,13 +37,5 @@ public enum PathType {
         }
 
         return Paths.get(resource.toURI());
-    }
-
-//    public String getPathName() {
-//        return getResource().getPath();
-//    }
-
-    public boolean exist() {
-        return Objects.nonNull(getClass().getClassLoader().getResource(this.getPathToFile()));
     }
 }
